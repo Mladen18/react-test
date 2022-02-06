@@ -1,15 +1,14 @@
-import React, { FC } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
+import "./header.css";
 
-const Header: FC = () => {
+const Header: React.FC = () => {
   return (
     <header>
       <nav>
-        <ul>
-          <li>
-            <NavLink to="/posts">All Posts</NavLink>
-          </li>
-        </ul>
+        <NavLink to="/posts" className="c-link">
+          All Posts
+        </NavLink>
       </nav>
     </header>
   );

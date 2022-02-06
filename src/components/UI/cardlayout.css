@@ -1,0 +1,15 @@
+.c-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #cce5ff;
+  max-width: 500px;
+  width: auto;
+  height: 450px;
+  padding: 5px 10px;
+  margin: 10px;
+}
+
+.c-post.m-auto {
+  margin: 0 auto;
+}
