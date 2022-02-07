@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Comment } from "../../interface/Comment";
 import { getComments } from "../../services/api";
 import "./commblock.css";
+import logCompName from "../../helper/logCompName";
 
-const CommentBlock: React.FC<Comment> = (props) => {
+const CommentsBlock: React.FC<Comment> = (props) => {
   const [loadComments, setLoadedComments] = useState<Comment[]>([]);
-  const id: number = props.id;
+  const { message } = props;
+  const componentName: string = "Comments Block";
+  useEffect(() => {
+    logCompName(message, componentName);
+  }, [message]);
+
+  const { id } = props;
 
   useEffect(() => {
     (async () => {
@@ -31,4 +38,4 @@ const CommentBlock: React.FC<Comment> = (props) => {
   );
 };
 
-export default CommentBlock;
+export default CommentsBlock;

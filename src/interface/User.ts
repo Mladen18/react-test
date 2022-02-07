@@ -3,4 +3,5 @@ export interface User {
   id: number;
   name: string;
   users: User[] | null;
+  message: string;
 }

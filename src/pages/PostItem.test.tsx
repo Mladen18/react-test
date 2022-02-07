@@ -4,6 +4,6 @@ import PostItem from "./PostItem";
 
 describe("Post Item component", () => {
   test("renders Post Item component", () => {
-    render(<PostItem />);
+    render(<PostItem message={""} />);
   });
 });

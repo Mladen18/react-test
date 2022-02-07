@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import logCompName from "../../helper/logCompName";
 
-const Search: React.FC<{ searchHandler: (e: string) => string }> = ({ searchHandler }) => {
+const Search: React.FC<{ searchHandler: (e: string) => string; message: string }> = ({ searchHandler, message }) => {
+  const componentName: string = "Search";
+  useEffect(() => {
+    logCompName(message, componentName);
+  }, [message]);
+
   const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     searchHandler(e.target.value);
   };

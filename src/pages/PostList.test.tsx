@@ -4,7 +4,7 @@ import PostsList from "./PostsList";
 
 describe("PostList component", () => {
   test("renders Post List component", (): void => {
-    render(<PostsList />);
+    render(<PostsList message={""} />);
     const searcText: HTMLElement = screen.getByText("Search:");
     expect(searcText).toBeInTheDocument();
   });

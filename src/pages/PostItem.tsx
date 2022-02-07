@@ -8,15 +8,24 @@ import { useParams } from "react-router-dom";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
 import CommentBlock from "../components/post/CommentsBlock";
+import { Props } from "../interface/Props";
+import logCompName from "../helper/logCompName";
 
-const PostItem: React.FC<{}> = () => {
+const PostItem: React.FC<Props> = (props) => {
   const [loadPost, setLoadedPost] = useState<Post | null>(null);
   const [loadUsers, setLoadedUsers] = useState<User[] | null>(null);
   const [loadComments, setLoadedComments] = useState<Comment[] | null>(null);
 
+  const { message } = props;
+  const componentName: string = "Posts Item";
+
   const { id } = useParams() as {
     id: string;
   };
+
+  useEffect(() => {
+    logCompName(message, componentName);
+  }, [message]);
 
   useEffect(() => {
     (async () => {
@@ -31,10 +40,10 @@ const PostItem: React.FC<{}> = () => {
 
   return (
     loadPost && (
-      <CardLayout className="m-auto">
-        <UserBlock id={loadPost.id} users={loadUsers} userId={0} name={""} />
-        <CardPost title={loadPost.title} body={loadPost.body} userId={loadPost.userId} id={loadPost.id} postId={loadPost.postId} />
-        {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} id={loadPost.id} postId={0} name={""} email={""} body={""} /> : <h2>No comments found</h2>}
+      <CardLayout className="m-auto" message={message}>
+        <UserBlock id={loadPost.id} users={loadUsers} userId={0} name={""} message={message} />
+        <CardPost title={loadPost.title} body={loadPost.body} userId={loadPost.userId} id={loadPost.id} postId={loadPost.postId} message={message} />
+        {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} id={loadPost.id} postId={0} name={""} email={""} body={""} message={message} /> : <h2>No comments found</h2>}
       </CardLayout>
     )
   );

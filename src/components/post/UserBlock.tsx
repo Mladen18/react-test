@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { User } from "../../interface/User";
+import logCompName from "../../helper/logCompName";
 
 const UserBlock: React.FC<User> = (props) => {
   const [loadUser, setLoadedUser] = useState<User>();
+
+  const { message } = props;
+  const componentName: string = "User Block";
+
+  useEffect(() => {
+    logCompName(message, componentName);
+  }, [message]);
 
   useEffect(() => {
     if (props.users !== null && props.id != null) {

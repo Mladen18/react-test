@@ -7,13 +7,14 @@ import NotFound from "./pages/NotFound";
 import PostItem from "./pages/PostItem";
 
 function App() {
+  const propMessage: string = "Hello from ";
   return (
-    <MainLayout>
+    <MainLayout message={propMessage}>
       <Routes>
         <Route path="/" element={<Navigate to="/posts" />} />
-        <Route path="/posts" element={<PostsList />} />
-        <Route path="/post/:id" element={<PostItem />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/posts" element={<PostsList message={propMessage} />} />
+        <Route path="/post/:id" element={<PostItem message={propMessage} />} />
+        <Route path="*" element={<NotFound message={propMessage} />} />
       </Routes>
     </MainLayout>
   );

@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 describe("Footer component", () => {
   test("renders Footer component", () => {
-    render(<Footer />);
+    render(<Footer message={""} />);
     const searcText = screen.getByText("Footer Copy Mladen");
     expect(searcText).toBeInTheDocument();
   });
