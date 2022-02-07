@@ -4,15 +4,13 @@ import { getComments } from "../../services/api";
 import "./commblock.css";
 import logCompName from "../../helper/logCompName";
 
-const CommentsBlock: React.FC<Comment> = (props) => {
+const CommentsBlock: React.FC<{ id: number; message: string }> = ({ id, message }) => {
   const [loadComments, setLoadedComments] = useState<Comment[]>([]);
-  const { message } = props;
+
   const componentName: string = "Comments Block";
   useEffect(() => {
     logCompName(message, componentName);
   }, [message]);
-
-  const { id } = props;
 
   useEffect(() => {
     (async () => {

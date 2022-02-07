@@ -4,7 +4,7 @@ import UserBlock from "./UserBlock";
 
 describe("User component", () => {
   test("renders USer component", () => {
-    render(<UserBlock userId={0} id={0} name={""} users={null} message={""} />);
+    render(<UserBlock id={0} users={null} message={""} />);
     const searcText = screen.getByText("User name:");
     expect(searcText).toBeInTheDocument();
   });

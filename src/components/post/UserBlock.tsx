@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { User } from "../../interface/User";
 import logCompName from "../../helper/logCompName";
 
-const UserBlock: React.FC<User> = (props) => {
+const UserBlock: React.FC<{ users: User[] | null; message: string; id: number }> = ({ users, message, id }) => {
   const [loadUser, setLoadedUser] = useState<User>();
 
-  const { message } = props;
   const componentName: string = "User Block";
 
   useEffect(() => {
@@ -13,10 +12,11 @@ const UserBlock: React.FC<User> = (props) => {
   }, [message]);
 
   useEffect(() => {
-    if (props.users !== null && props.id != null) {
-      setLoadedUser(props.users.find((item: User) => item.id === +props.id));
+    if (users !== null && id != null) {
+      const user = users.find((item: User) => item.id === id);
+      setLoadedUser(user);
     }
-  }, [props.users, props.id]);
+  }, [users, id]);
 
   return (
     <div className="e-user">

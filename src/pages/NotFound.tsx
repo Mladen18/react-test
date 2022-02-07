@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Props } from "../interface/Props";
 import logCompName from "../helper/logCompName";
 
-const NotFound: React.FC<Props> = (props) => {
-  const { message } = props;
+const NotFound: React.FC<{ message: string }> = ({ message }) => {
   const componentName: string = "Not Found";
   logCompName(message, componentName);
 

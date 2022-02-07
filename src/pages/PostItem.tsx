@@ -7,16 +7,14 @@ import { getComments, getPost, getUsers } from "../services/api";
 import { useParams } from "react-router-dom";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
-import CommentBlock from "../components/post/CommentsBlock";
-import { Props } from "../interface/Props";
+import CommentBlock from "../components/post/CommentBlock";
 import logCompName from "../helper/logCompName";
 
-const PostItem: React.FC<Props> = (props) => {
+const PostItem: React.FC<{ message: string }> = ({ message }) => {
   const [loadPost, setLoadedPost] = useState<Post | null>(null);
   const [loadUsers, setLoadedUsers] = useState<User[] | null>(null);
   const [loadComments, setLoadedComments] = useState<Comment[] | null>(null);
 
-  const { message } = props;
   const componentName: string = "Posts Item";
 
   const { id } = useParams() as {
@@ -41,9 +39,9 @@ const PostItem: React.FC<Props> = (props) => {
   return (
     loadPost && (
       <CardLayout className="m-auto" message={message}>
-        <UserBlock id={loadPost.id} users={loadUsers} userId={0} name={""} message={message} />
+        <UserBlock id={loadPost.id} users={loadUsers} message={message} />
         <CardPost title={loadPost.title} body={loadPost.body} userId={loadPost.userId} id={loadPost.id} postId={loadPost.postId} message={message} />
-        {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} id={loadPost.id} postId={0} name={""} email={""} body={""} message={message} /> : <h2>No comments found</h2>}
+        {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} message={message} /> : <h2>No comments found</h2>}
       </CardLayout>
     )
   );

@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Post } from "../interface/Post";
 import { User } from "../interface/User";
 import { Link } from "react-router-dom";
 import CardPost from "../components/post/CardPost";
 import { getPosts, getUsers } from "../services/api";
 import Search from "../components/search/Search";
-import "./postlist.css";
 import CommentsBlock from "../components/post/CommentsBlock";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
-import { Props } from "../interface/Props";
 import logCompName from "../helper/logCompName";
+import "./postlist.css";
 
-const PostsList: React.FC<Props> = (props) => {
+const PostsList: React.FC<{ message: string }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadedPosts, setLoadedPosts] = useState<Post[]>([]);
   const [loadUsers, setLoadedUsers] = useState<User[] | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
+  const componentMounted = useRef(true);
 
-  const { message } = props;
   const componentName: string = "Posts List";
 
   useEffect(() => {
@@ -27,16 +26,21 @@ const PostsList: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    (async () => {
-      try {
-        const [postData, usersData] = await Promise.all([getPosts(), getUsers()]);
-        setLoadedPosts(postData);
-        setLoadedUsers(usersData);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    if (componentMounted.current) {
+      (async () => {
+        try {
+          const [postData, usersData] = await Promise.all([getPosts(), getUsers()]);
+          setLoadedPosts(postData);
+          setLoadedUsers(usersData);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
     setIsLoading(false);
+    return () => {
+      componentMounted.current = false;
+    };
   }, []);
 
   const searchHandler = (value: string): any => {
@@ -64,9 +68,9 @@ const PostsList: React.FC<Props> = (props) => {
               <li className="c-postList__item" key={item.id}>
                 <Link to={`/post/${item.id}`} className="c-postList__link">
                   <CardLayout className={""} message={message}>
-                    <UserBlock id={item.id} users={loadUsers} userId={0} name={""} message={message} />
+                    <UserBlock id={item.id} users={loadUsers} message={message} />
                     <CardPost title={item.title} body={item.body} userId={item.userId} id={item.id} postId={item.postId} message={message} />
-                    <CommentsBlock id={item.id} postId={0} name={""} email={""} body={""} comments={null} message={message} />
+                    <CommentsBlock id={item.id} message={message} />
                   </CardLayout>
                 </Link>
               </li>
