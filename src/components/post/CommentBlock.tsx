@@ -11,19 +11,21 @@ const CommentBlock: React.FC<{ comments: Comment[]; message: string }> = ({ comm
   }, [message]);
 
   return (
-    <div className="e-comments">
+    <React.Fragment>
       <h3>Comments:</h3>
-      <ul>
-        {comments.map((item: Comment) => (
-          <li key={item.id}>
-            <h4>
-              {item.name} {item.email}
-            </h4>
-            <p>{item.body}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="e-comments">
+        <ul>
+          {comments.map((item: Comment) => (
+            <li key={item.id}>
+              <h4>
+                {item.name} {item.email}
+              </h4>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </React.Fragment>
   );
 };
 

@@ -13,7 +13,7 @@ const Search: React.FC<{ searchHandler: (e: string) => string; message: string }
 
   return (
     <div className="c-search">
-      <label htmlFor="search">Search:</label>
+      <label htmlFor="search">Search: </label>
       <input onChange={searchChangeHandler} id="search" name="search" className="c-search__input" type="text" placeholder="Search..." />
     </div>
   );

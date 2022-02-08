@@ -12,7 +12,6 @@ import logCompName from "../helper/logCompName";
 import "./postlist.css";
 
 const PostsList: React.FC<{ message: string }> = ({ message }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [loadedPosts, setLoadedPosts] = useState<Post[]>([]);
   const [loadUsers, setLoadedUsers] = useState<User[] | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -25,7 +24,6 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
   }, [message]);
 
   useEffect(() => {
-    setIsLoading(true);
     if (componentMounted.current) {
       (async () => {
         try {
@@ -37,31 +35,25 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
         }
       })();
     }
-    setIsLoading(false);
     return () => {
       componentMounted.current = false;
     };
   }, []);
 
   const searchHandler = (value: string): any => {
-    if (value !== "") {
-      console.log(filteredPosts);
-      return setSearchValue(value);
-    }
+    setSearchValue(value);
   };
 
   let filteredPosts = loadedPosts.filter((post: Post) => {
     return post.title.toLowerCase().includes(searchValue.toLowerCase());
-  }, []);
+  });
 
   return (
     <section className="s-posts">
       <Search searchHandler={searchHandler} message={message} />
       <div className="c-postList">
         <ul className="c-postList__items">
-          {isLoading ? (
-            <h1>Loading...</h1>
-          ) : loadedPosts.length <= 0 || filteredPosts.length <= 0 ? (
+          {loadedPosts.length <= 0 || filteredPosts.length <= 0 ? (
             <h1>No posts found.</h1>
           ) : (
             (searchValue === "" ? loadedPosts : filteredPosts).map((item: Post) => (
