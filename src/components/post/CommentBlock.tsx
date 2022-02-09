@@ -4,8 +4,8 @@ import "./commblock.css";
 import logCompName from "../../helper/logCompName";
 
 const CommentBlock: React.FC<{ comments: Comment[]; message: string }> = ({ comments, message }) => {
+  // Log message props
   const componentName: string = "Comment Block";
-
   useEffect(() => {
     logCompName(message, componentName);
   }, [message]);

@@ -1,0 +1,18 @@
+.footer {
+  background-color: blue;
+  color: white;
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+}
+
+.footer p {
+  background-color: #000;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}

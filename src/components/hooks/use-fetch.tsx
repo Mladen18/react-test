@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { Post } from "../../interface/Post";
-import { User } from "../../interface/User";
-import { Comment } from "../../interface/Comment";
+import { Post, User, Comment } from "../../interface/index";
 import { getComments, getPost, getUsers, getPosts } from "../../services/api";
 
 const useFetch = (id: number | null) => {

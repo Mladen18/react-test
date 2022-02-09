@@ -1,10 +1,10 @@
-.e-comments {
+.comments {
   width: 100%;
   height: 350px;
   overflow-y: scroll;
 }
 
-.c-comment ul {
+.comments ul {
   list-style: none;
   padding: 0;
   margin: 0 auto;

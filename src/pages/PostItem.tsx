@@ -6,6 +6,7 @@ import CardLayout from "../components/UI/CardLayout";
 import CommentsBlock from "../components/post/CommentsBlock";
 import logCompName from "../helper/logCompName";
 import useFetch from "../components/hooks/use-fetch";
+import style from "./PostItem.module.css";
 
 const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props
@@ -27,9 +28,9 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
 
   if (loadPost) {
     postList = (
-      <CardLayout className="m-auto" message={message}>
+      <CardLayout className={style.auto} message={message}>
         <UserBlock id={loadPost.id} users={loadUsers} message={message} />
-        <CardPost title={loadPost.title} body={loadPost.body} userId={loadPost.userId} id={loadPost.id} postId={loadPost.postId} message={message} />
+        <CardPost title={loadPost.title} body={loadPost.body} message={message} />
         {loadComments != null && loadComments.length > 0 ? <CommentsBlock id={loadPost.id} message={message} /> : <h2>No comments found</h2>}
       </CardLayout>
     );

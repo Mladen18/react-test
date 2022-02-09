@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./cardlayout.css";
+import styles from "./CardLayout.module.css";
 import logCompName from "../../helper/logCompName";
 
 const CardLayout: React.FC<{ message: string; children: React.ReactNode; className: string }> = ({ message, children, className }) => {
@@ -8,7 +8,7 @@ const CardLayout: React.FC<{ message: string; children: React.ReactNode; classNa
     logCompName(message, componentName);
   }, [message]);
 
-  const classes: string = "c-post " + className;
+  const classes: string = styles.post + " " + className;
 
   return <div className={classes}>{children}</div>;
 };

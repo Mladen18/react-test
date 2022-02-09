@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Post } from "../interface/Post";
+import { Post } from "../interface/index";
 import { Link } from "react-router-dom";
 import CardPost from "../components/post/CardPost";
 import Search from "../components/search/Search";
@@ -7,7 +7,7 @@ import CommentsBlock from "../components/post/CommentsBlock";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
 import logCompName from "../helper/logCompName";
-import "./postlist.css";
+import styles from "./PostList.module.css";
 import useFetch from "../components/hooks/use-fetch";
 
 const PostsList: React.FC<{ message: string }> = ({ message }) => {
@@ -35,18 +35,18 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
   // RETURN CONTENT
   let postList = <h1>No posts found!</h1>;
 
-  if (loadedPosts.length > 0 || filteredPosts.length > 0) {
+  if ((loadedPosts.length > 0 || filteredPosts.length) > 0 && !isLoading) {
     postList = (
-      <section className="s-posts">
+      <section className={styles.posts}>
         <Search searchHandler={searchHandler} message={message} />
-        <div className="c-postList">
-          <ul className="c-postList__items">
+        <div className={styles.postList}>
+          <ul className={styles.postList__items}>
             {(searchValue === "" ? loadedPosts : filteredPosts).map((item: Post) => (
-              <li className="c-postList__item" key={item.id}>
-                <Link to={`/post/${item.id}`} className="c-postList__link">
+              <li className={styles.postList__item} key={item.id}>
+                <Link to={`/post/${item.id}`} className={styles.postList__link}>
                   <CardLayout className={""} message={message}>
                     <UserBlock id={item.id} users={loadUsers} message={message} />
-                    <CardPost title={item.title} body={item.body} userId={item.userId} id={item.id} postId={item.postId} message={message} />
+                    <CardPost title={item.title} body={item.body} message={message} />
                     <CommentsBlock id={item.id} message={message} />
                   </CardLayout>
                 </Link>

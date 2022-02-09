@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Comment } from "../../interface/Comment";
 import { getComments } from "../../services/api";
-import "./commblock.css";
+import styles from "./CommsBlock.module.css";
 import logCompName from "../../helper/logCompName";
 
 const CommentsBlock: React.FC<{ id: number; message: string }> = ({ id, message }) => {
   const [loadComments, setLoadedComments] = useState<Comment[]>([]);
 
+  // Log message props
   const componentName: string = "Comments Block";
   useEffect(() => {
     logCompName(message, componentName);
   }, [message]);
 
+  // Log message props
   useEffect(() => {
     (async () => {
       const comment: Comment[] = await getComments(id);
@@ -22,7 +24,7 @@ const CommentsBlock: React.FC<{ id: number; message: string }> = ({ id, message 
   return (
     <React.Fragment>
       <h3>Comments:</h3>
-      <div className="e-comments">
+      <div className={styles.comments}>
         <ul>
           {loadComments.map((item) => (
             <li key={item.id}>

@@ -1,4 +1,4 @@
-.c-post {
+.post {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,8 +7,4 @@
   width: auto;
   height: 450px;
   padding: 5px 10px;
-}
-
-.c-post.m-auto {
-  margin: 0 auto;
 }
