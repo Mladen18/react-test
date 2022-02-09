@@ -1,62 +1,47 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Post } from "../interface/Post";
-import { User } from "../interface/User";
 import { Link } from "react-router-dom";
 import CardPost from "../components/post/CardPost";
-import { getPosts, getUsers } from "../services/api";
 import Search from "../components/search/Search";
 import CommentsBlock from "../components/post/CommentsBlock";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
 import logCompName from "../helper/logCompName";
 import "./postlist.css";
+import useFetch from "../components/hooks/use-fetch";
 
 const PostsList: React.FC<{ message: string }> = ({ message }) => {
-  const [loadedPosts, setLoadedPosts] = useState<Post[]>([]);
-  const [loadUsers, setLoadedUsers] = useState<User[] | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
-  const componentMounted = useRef(true);
 
+  // Log Message props
   const componentName: string = "Posts List";
-
   useEffect(() => {
     logCompName(message, componentName);
   }, [message]);
 
-  useEffect(() => {
-    if (componentMounted.current) {
-      (async () => {
-        try {
-          const [postData, usersData] = await Promise.all([getPosts(), getUsers()]);
-          setLoadedPosts(postData);
-          setLoadedUsers(usersData);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-    return () => {
-      componentMounted.current = false;
-    };
-  }, []);
+  // Call custom hook
+  const { isLoading, loadedPosts, loadUsers } = useFetch(null);
 
+  // Search handler value
   const searchHandler = (value: string): any => {
     setSearchValue(value);
   };
 
+  // Filter posts
   let filteredPosts = loadedPosts.filter((post: Post) => {
     return post.title.toLowerCase().includes(searchValue.toLowerCase());
   });
 
-  return (
-    <section className="s-posts">
-      <Search searchHandler={searchHandler} message={message} />
-      <div className="c-postList">
-        <ul className="c-postList__items">
-          {loadedPosts.length <= 0 || filteredPosts.length <= 0 ? (
-            <h1>No posts found.</h1>
-          ) : (
-            (searchValue === "" ? loadedPosts : filteredPosts).map((item: Post) => (
+  // RETURN CONTENT
+  let postList = <h1>No posts found!</h1>;
+
+  if (loadedPosts.length > 0 || filteredPosts.length > 0) {
+    postList = (
+      <section className="s-posts">
+        <Search searchHandler={searchHandler} message={message} />
+        <div className="c-postList">
+          <ul className="c-postList__items">
+            {(searchValue === "" ? loadedPosts : filteredPosts).map((item: Post) => (
               <li className="c-postList__item" key={item.id}>
                 <Link to={`/post/${item.id}`} className="c-postList__link">
                   <CardLayout className={""} message={message}>
@@ -66,12 +51,20 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
                   </CardLayout>
                 </Link>
               </li>
-            ))
-          )}
-        </ul>
-      </div>
-    </section>
-  );
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  }
+
+  let content = postList;
+
+  if (isLoading) {
+    content = <h1>Loading ...</h1>;
+  }
+
+  return content;
 };
 
 export default PostsList;
