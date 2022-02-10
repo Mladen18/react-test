@@ -1,5 +1,3 @@
-import React from "react";
-import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PostsList from "./pages/PostsList";
 import MainLayout from "./components/layout/MainLayout";

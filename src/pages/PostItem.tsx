@@ -6,7 +6,7 @@ import CardLayout from "../components/UI/CardLayout";
 import CommentsBlock from "../components/post/CommentsBlock";
 import logCompName from "../helper/logCompName";
 import useFetch from "../components/hooks/use-fetch";
-import style from "./PostItem.module.css";
+import style from "./PostItem.module.scss";
 
 const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props

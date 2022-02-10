@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Footer.module.css";
+import styles from "./Footer.module.scss";
 import logCompName from "../../helper/logCompName";
 
 const Footer: React.FC<{ message: string }> = ({ message }) => {

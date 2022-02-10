@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./Header.module.css";
+import styles from "./Header.module.scss";
 import logCompName from "../../helper/logCompName";
 
 const Header: React.FC<{ message: string }> = ({ message }) => {

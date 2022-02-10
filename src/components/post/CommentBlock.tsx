@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Comment } from "../../interface/Comment";
-import "./commblock.css";
+import "./commblock.scss";
 import logCompName from "../../helper/logCompName";
 
 const CommentBlock: React.FC<{ comments: Comment[]; message: string }> = ({ comments, message }) => {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./CardPost.module.css";
+import styles from "./CardPost.module.scss";
 import logCompName from "../../helper/logCompName";
 
 const CardPost: React.FC<{ message: string; title: string; body: string }> = ({ message, title, body }) => {

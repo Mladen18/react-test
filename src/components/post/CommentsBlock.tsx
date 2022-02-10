@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Comment } from "../../interface/Comment";
 import { getComments } from "../../services/api";
-import styles from "./CommsBlock.module.css";
+import styles from "./CommsBlock.module.scss";
 import logCompName from "../../helper/logCompName";
 
 const CommentsBlock: React.FC<{ id: number; message: string }> = ({ id, message }) => {

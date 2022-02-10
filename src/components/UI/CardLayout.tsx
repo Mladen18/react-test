@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./CardLayout.module.css";
+import styles from "./CardLayout.module.scss";
 import logCompName from "../../helper/logCompName";
 
 const CardLayout: React.FC<{ message: string; children: React.ReactNode; className: string }> = ({ message, children, className }) => {
