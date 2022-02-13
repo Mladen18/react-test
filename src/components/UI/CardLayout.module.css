@@ -1,0 +1,18 @@
+.post {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #cce5ff;
+  max-width: 500px;
+  width: auto;
+  height: 450px;
+  padding: 5px 10px;
+}
+/*# sourceMappingURL=CardLayout.module.css.map */

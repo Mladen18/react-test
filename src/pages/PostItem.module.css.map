@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,MAAM;CACf",
+    "sources": [
+        "PostItem.module.scss"
+    ],
+    "names": [],
+    "file": "PostItem.module.css"
+}

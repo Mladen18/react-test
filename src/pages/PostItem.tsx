@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
+import { Post, User, Comment } from "../interface/index";
 import CardPost from "../components/post/CardPost";
-import { useParams } from "react-router-dom";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
-import CommentsBlock from "../components/post/CommentsBlock";
+import { useParams } from "react-router-dom";
 import logCompName from "../helper/logCompName";
-import useFetch from "../components/hooks/use-fetch";
+// import useFetch from "../components/hooks/use-fetch";
+import fetchData from "../components/hooks/fetch-query";
+import { useQuery } from "react-query";
 import style from "./PostItem.module.scss";
+import CommentBlock from "../components/post/CommentBlock";
 
 const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props
@@ -21,27 +24,28 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
   };
 
   // Call custom hook
-  const { isLoading, loadPost, loadComments, loadUsers } = useFetch(+id);
+  // const { isLoading, loadPost, loadComments, loadUsers } = useFetch(+id);
 
-  // RETURN CONTENT
-  let postList = <h1>No posts found</h1>;
+  // Call query
+  const { data, status } = useQuery<(Post[] | User[] | Comment[])[] | any>(["data", id], () => fetchData(id));
+  let loadPost: Post = data ? data[0] : null;
+  let loadUsers: User[] = data ? data[2] : null;
+  let loadComments: Comment[] = data ? data[1] : null;
 
-  if (loadPost) {
-    postList = (
-      <CardLayout className={style.auto} message={message}>
-        <UserBlock id={loadPost.id} users={loadUsers} message={message} />
-        <CardPost title={loadPost.title} body={loadPost.body} message={message} />
-        {loadComments != null && loadComments.length > 0 ? <CommentsBlock id={loadPost.id} message={message} /> : <h2>No comments found</h2>}
-      </CardLayout>
-    );
-  }
-
-  let content = postList;
-
-  if (isLoading) {
-    content = <h1>Loading ...</h1>;
-  }
-
-  return content;
+  return (
+    <React.Fragment>
+      {status === "loading" && <h1>Loading...</h1>}
+      {status === "error" && <h1>Error</h1>}
+      {status === "success" && loadPost ? (
+        <CardLayout className={style.auto} message={message}>
+          <UserBlock id={loadPost.id} users={loadUsers} message={message} />
+          <CardPost title={loadPost.title} body={loadPost.body} message={message} />
+          {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} id={null} message={message} /> : <h2>No comments found</h2>}
+        </CardLayout>
+      ) : (
+        <h1>No posts found</h1>
+      )}
+    </React.Fragment>
+  );
 };
 export default PostItem;

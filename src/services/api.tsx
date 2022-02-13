@@ -19,6 +19,11 @@ export const getComments = async (id: number | string): Promise<Comment[]> => {
   return await r.json();
 };
 
+export const getAllComments = async (): Promise<Comment[]> => {
+  const r = await fetch(`${API_URL}/comments`);
+  return await r.json();
+};
+
 export const getUsers = async (): Promise<User[]> => {
   const r = await fetch(`${API_URL}/users`);
   return await r.json();

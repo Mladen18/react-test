@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,UAAU,EAAE,MAAM;CACnB;;AAED,AAAA,SAAS,CAAC,EAAE,CAAC;EACX,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,CAAC;EACV,MAAM,EAAE,MAAM;EACd,cAAc,EAAE,MAAM;EACtB,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;EACnB,MAAM,EAAE,SAAS;CAClB",
+    "sources": [
+        "CommsBlock.module.scss"
+    ],
+    "names": [],
+    "file": "CommsBlock.module.css"
+}

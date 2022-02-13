@@ -1,0 +1,27 @@
+.postList__items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.postList__item {
+  display: block;
+  margin: 10px 10px;
+}
+
+.postList__link {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+/*# sourceMappingURL=PostList.module.css.map */

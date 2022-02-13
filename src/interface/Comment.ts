@@ -5,5 +5,4 @@ export interface Comment {
   email: string;
   body: string;
   message: string;
-  comments: Comment[] | null;
 }

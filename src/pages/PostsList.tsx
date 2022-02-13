@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Post } from "../interface/index";
-import { Link } from "react-router-dom";
-import CardPost from "../components/post/CardPost";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { Post, User, Comment } from "../interface/index";
+import logCompName from "../helper/logCompName";
+import fetchData from "../components/hooks/fetch-query";
 import Search from "../components/search/Search";
-import CommentsBlock from "../components/post/CommentsBlock";
+import styles from "./PostList.module.css";
+import CardPost from "../components/post/CardPost";
 import UserBlock from "../components/post/UserBlock";
 import CardLayout from "../components/UI/CardLayout";
-import logCompName from "../helper/logCompName";
-import styles from "./PostList.module.scss";
-import useFetch from "../components/hooks/use-fetch";
+import CommentBlock from "../components/post/CommentBlock";
+import { Link } from "react-router-dom";
 
 const PostsList: React.FC<{ message: string }> = ({ message }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -19,52 +20,50 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
     logCompName(message, componentName);
   }, [message]);
 
-  // Call custom hook
-  const { isLoading, loadedPosts, loadUsers } = useFetch(null);
+  // Call query
+  const { data, status } = useQuery<(Post[] | User[] | Comment[])[] | any>(["data", null], () => fetchData(null));
+  let loadPosts: Post[] = data ? data[0] : null;
+  let loadUsers: User[] = data ? data[1] : null;
+  let loadComments: Comment[] = data ? data[2] : null;
 
   // Search handler value
-  const searchHandler = (value: string): any => {
+  const searchHandler = (value: string): string => {
     setSearchValue(value);
+    return value;
   };
 
   // Filter posts
-  let filteredPosts = loadedPosts.filter((post: Post) => {
+  const filteredPosts = (loadPosts ? loadPosts : []).filter((post: Post) => {
     return post.title.toLowerCase().includes(searchValue.toLowerCase());
   });
 
   // RETURN CONTENT
-  let postList = <h1>No posts found!</h1>;
-
-  if ((loadedPosts.length > 0 || filteredPosts.length) > 0 && !isLoading) {
-    postList = (
-      <div className={styles.postList}>
-        <ul className={styles.postList__items}>
-          {(searchValue === "" ? loadedPosts : filteredPosts).map((item: Post) => (
-            <li className={styles.postList__item} key={item.id}>
-              <Link to={`/post/${item.id}`} className={styles.postList__link}>
-                <CardLayout className={""} message={message}>
-                  <UserBlock id={item.id} users={loadUsers} message={message} />
-                  <CardPost title={item.title} body={item.body} message={message} />
-                  <CommentsBlock id={item.id} message={message} />
-                </CardLayout>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
-  let content = postList;
-
-  if (isLoading) {
-    content = <h1>Loading ...</h1>;
-  }
-
   return (
     <section className={styles.posts}>
       <Search searchHandler={searchHandler} message={message} />
-      {content}
+      <div className={styles.postList}>
+        <ul className={styles.postList__items}>
+          {status === "loading" && <h1>Loading...</h1>}
+          {status === "error" && <h1>Error</h1>}
+          {status === "success" &&
+            // eslint-disable-next-line array-callback-return
+            (loadPosts.length > 0 && filteredPosts.length > 0 ? (
+              (searchValue === "" ? loadPosts : filteredPosts).map((item: { id: number; title: string; body: string }, key: React.Key | null | undefined) => (
+                <li className={styles.postList__item} key={item.id}>
+                  <Link to={`/post/${item.id}`} className={styles.postList__link}>
+                    <CardLayout className={""} message={message}>
+                      <UserBlock id={item.id} users={loadUsers} message={message} />
+                      <CardPost title={item.title} body={item.body} message={message} />
+                      <CommentBlock id={item.id} comments={loadComments} message={message} />
+                    </CardLayout>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <h1>No posts found</h1>
+            ))}
+        </ul>
+      </div>
     </section>
   );
 };

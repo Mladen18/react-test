@@ -13,7 +13,7 @@ const UserBlock: React.FC<{ users: User[] | null; message: string; id: number }>
 
   // Find user by id
   useEffect(() => {
-    if (users !== null && id != null) {
+    if (users != null && id != null) {
       const user = users.find((item: User) => item.id === id);
       setLoadedUser(user);
     }
