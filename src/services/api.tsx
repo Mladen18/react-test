@@ -28,3 +28,19 @@ export const getUsers = async (): Promise<User[]> => {
   const r = await fetch(`${API_URL}/users`);
   return await r.json();
 };
+
+// CREATE POST
+export const createPost = async (title: string, body: string, userId: number): Promise<Post[]> => {
+  const r = await fetch(`${API_URL}/posts`, {
+    method: "POST",
+    body: JSON.stringify({
+      title: title,
+      body: body,
+      userId: userId,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+  return await r.json();
+};
