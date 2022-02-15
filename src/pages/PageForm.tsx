@@ -3,6 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import logCompName from "../helper/logCompName";
 import { createPost } from "../services/api";
 import { FormValues, postErrors } from "../interface/index";
+import { useMutation } from "react-query";
+import FormStyle from "./PageForm.module.scss";
 
 const PageForm: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props
@@ -10,6 +12,8 @@ const PageForm: React.FC<{ message: string }> = ({ message }) => {
   useEffect(() => {
     logCompName(message, componentName);
   }, [message]);
+
+  const mutation = useMutation(createPost);
 
   return (
     <React.Fragment>
@@ -26,34 +30,46 @@ const PageForm: React.FC<{ message: string }> = ({ message }) => {
           }
           return errors;
         }}
-        onSubmit={async (values: FormValues, actions) => {
-          const response = await createPost(values.title, values.body, values.userId);
-          actions.setSubmitting(false);
-          if (response) {
-            console.log(response);
+        onSubmit={(values: FormValues, { setSubmitting, resetForm }) => {
+          try {
+            const data = mutation.mutateAsync(values);
+            console.log(data); // data
+            resetForm();
+          } catch (error) {
+            console.error(error); // error
           }
-          actions.resetForm({
-            values: {
-              title: "",
-              body: "",
-              userId: values.userId + 1,
-            },
-          });
+          setSubmitting(false);
         }}
       >
         {({ values, handleBlur, isSubmitting }) => (
-          <Form>
-            <div>
+          <Form className={FormStyle.form}>
+            <div className={FormStyle.form__wrapper}>
               <label htmlFor="title">Enter Title*</label>
-              <Field id="title" type="text" name="title" placeholder="Post Title" onBlur={handleBlur} value={values.title} />
-              <ErrorMessage name="title" component="div" />
+              <Field
+                id="title"
+                type="text"
+                name="title"
+                placeholder="Post Title"
+                onBlur={handleBlur}
+                value={values.title}
+                className={FormStyle.form__input}
+              />
+              <ErrorMessage name="title" component="div" className={FormStyle.error} />
             </div>
-            <div>
+            <div className={FormStyle.form__wrapper}>
               <label htmlFor="body">Enter Body*</label>
-              <Field id="body" type="text" name="body" placeholder="Post Body" onBlur={handleBlur} value={values.body} />
-              <ErrorMessage name="body" component="div" />
+              <Field
+                id="body"
+                type="text"
+                name="body"
+                placeholder="Post Body"
+                onBlur={handleBlur}
+                value={values.body}
+                className={FormStyle.form__input}
+              />
+              <ErrorMessage name="body" component="div" className={FormStyle.error} />
             </div>
-            <button type="submit" disabled={isSubmitting}>
+            <button className={FormStyle.button} type="submit" disabled={isSubmitting}>
               Submit
             </button>
           </Form>

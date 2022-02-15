@@ -1,0 +1,27 @@
+@use "../variables" as vars;
+
+.form {
+  width: 500px;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  background: vars.$light-grey;
+  padding: 50px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid vars.$grey;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+}

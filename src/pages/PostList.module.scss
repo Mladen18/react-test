@@ -1,21 +1,5 @@
-.postList__items {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+@use "../styles/components/post";
 
-.postList__item {
-  display: block;
-  margin: 10px 10px;
-}
-
-.postList__link {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+.post {
+  @extend .post;
 }

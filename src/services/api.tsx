@@ -9,7 +9,7 @@ export const getPosts = async (): Promise<Post[]> => {
   return await r.json();
 };
 
-export const getPost = async (id: number | string): Promise<Post> => {
+export const getPost = async (id: number | null): Promise<Post> => {
   const r = await fetch(`${API_URL}/posts/${id}`);
   return await r.json();
 };
@@ -30,17 +30,17 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 // CREATE POST
-export const createPost = async (title: string, body: string, userId: number): Promise<Post[]> => {
-  const r = await fetch(`${API_URL}/posts`, {
+export const createPost = async ({ title, body }: { title: string; body: string }): Promise<Post[]> => {
+  const r = await fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     body: JSON.stringify({
-      title: title,
-      body: body,
-      userId: userId,
+      title,
+      body,
+      userId: 1,
     }),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
-  return await r.json();
+  return r.json();
 };

@@ -1,0 +1,19 @@
+@use "../styles/UI/button";
+@use "../styles/UI/status";
+@use "../styles/components/form";
+
+.button {
+  @extend .button;
+}
+
+.error {
+  @extend .error;
+}
+
+.success {
+  @extend .success;
+}
+
+.form {
+  @extend .form;
+}

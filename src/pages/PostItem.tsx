@@ -27,10 +27,10 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // const { isLoading, loadPost, loadComments, loadUsers } = useFetch(+id);
 
   // Call query
-  const { data, status } = useQuery<(Post | User[] | Comment[])[] | any>(["data", id], () => fetchData(id));
+  const { data, status } = useQuery<any>(["data", id], () => fetchData(+id));
   let loadPost: Post = data ? data[0] : null;
-  let loadUsers: User[] = data ? data[2] : null;
-  let loadComments: Comment[] = data ? data[1] : null;
+  let loadUsers: User[] = data ? data[2] : [];
+  let loadComments: Comment[] = data ? data[1] : [];
 
   return (
     <React.Fragment>
@@ -40,7 +40,11 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
         <CardLayout className={style.auto} message={message}>
           <UserBlock id={loadPost.id} users={loadUsers} message={message} />
           <CardPost title={loadPost.title} body={loadPost.body} message={message} />
-          {loadComments != null && loadComments.length > 0 ? <CommentBlock comments={loadComments} id={null} message={message} /> : <h2>No comments found</h2>}
+          {loadComments != null && loadComments.length > 0 ? (
+            <CommentBlock comments={loadComments} id={null} message={message} />
+          ) : (
+            <h2>No comments found</h2>
+          )}
         </CardLayout>
       )}
     </React.Fragment>

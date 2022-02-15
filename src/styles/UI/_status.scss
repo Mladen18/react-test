@@ -1,0 +1,12 @@
+@use "../../styles/variables/" as vars;
+
+.error {
+  color: vars.$red;
+  padding-bottom: 10px;
+  font-size: vars.$p;
+}
+
+.success {
+  color: vars.$green;
+  padding-bottom: 10px;
+}

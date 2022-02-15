@@ -21,10 +21,10 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
   }, [message]);
 
   // Call query
-  const { data, status } = useQuery<(Post[] | User[] | Comment[])[] | any>(["data", null], () => fetchData(null));
-  let loadPosts: Post[] = data ? data[0] : null;
-  let loadUsers: User[] = data ? data[1] : null;
-  let loadComments: Comment[] = data ? data[2] : null;
+  const { data, status } = useQuery<any>(["data", null], () => fetchData(null));
+  let loadPosts: Post[] = data ? data[0] : [];
+  let loadUsers: User[] = data ? data[1] : [];
+  let loadComments: Comment[] = data ? data[2] : [];
 
   // Search handler value
   const searchHandler = (value: string): string => {
@@ -48,17 +48,19 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
           {status === "success" &&
             // eslint-disable-next-line array-callback-return
             (loadPosts.length > 0 && filteredPosts.length > 0 ? (
-              (searchValue === "" ? loadPosts : filteredPosts).map((item: { id: number; title: string; body: string }, key: React.Key | null | undefined) => (
-                <li className={styles.postList__item} key={item.id}>
-                  <Link to={`/post/${item.id}`} className={styles.postList__link}>
-                    <CardLayout className={""} message={message}>
-                      <UserBlock id={item.id} users={loadUsers} message={message} />
-                      <CardPost title={item.title} body={item.body} message={message} />
-                      <CommentBlock id={item.id} comments={loadComments} message={message} />
-                    </CardLayout>
-                  </Link>
-                </li>
-              ))
+              (searchValue === "" ? loadPosts : filteredPosts).map(
+                (item: { id: number; title: string; body: string }) => (
+                  <li className={styles.postList__item} key={item.id}>
+                    <Link to={`/post/${item.id}`} className={styles.postList__link}>
+                      <CardLayout className={""} message={message}>
+                        <UserBlock id={item.id} users={loadUsers} message={message} />
+                        <CardPost title={item.title} body={item.body} message={message} />
+                        <CommentBlock id={item.id} comments={loadComments} message={message} />
+                      </CardLayout>
+                    </Link>
+                  </li>
+                )
+              )
             ) : (
               <h1>No posts found</h1>
             ))}
