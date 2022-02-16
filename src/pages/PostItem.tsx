@@ -29,8 +29,8 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Call query
   const { data, status } = useQuery<any>(["data", id], () => fetchData(+id));
   let loadPost: Post = data ? data[0] : null;
-  let loadUsers: User[] = data ? data[2] : [];
-  let loadComments: Comment[] = data ? data[1] : [];
+  let loadUsers: User[] = data ? data[1] : [];
+  let loadComments: Comment[] = data ? data[2] : [];
 
   return (
     <React.Fragment>
