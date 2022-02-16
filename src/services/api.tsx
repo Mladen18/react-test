@@ -14,7 +14,7 @@ export const getPost = async (id: number | null): Promise<Post> => {
   return await r.json();
 };
 
-export const getComments = async (id: number | string): Promise<Comment[]> => {
+export const getComments = async (id: number | null): Promise<Comment[]> => {
   const r = await fetch(`${API_URL}/posts/${id}/comments`);
   return await r.json();
 };

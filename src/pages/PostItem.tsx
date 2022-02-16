@@ -27,10 +27,16 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // const { isLoading, loadPost, loadComments, loadUsers } = useFetch(+id);
 
   // Call query
-  const { data, status } = useQuery<any>(["data", id], () => fetchData(+id));
-  let loadPost: Post = data ? data[0] : null;
-  let loadUsers: User[] = data ? data[1] : [];
-  let loadComments: Comment[] = data ? data[2] : [];
+  // const loadPost: Promise<Post | null> = useQuery(['post', id], () => fetchData(+id, "Post"))
+  // const loadUsers: User[] = useQuery('users', fetchTeams)
+  // const loadComments: Comment[] = useQuery('comments', fetchProjects)
+
+  const { data, status } = useQuery<(Post | User[] | Comment[])[] | undefined | any>(["post", id], () =>
+    fetchData(+id, "1")
+  );
+  const loadPost = data ? data[0] : {};
+  const loadUsers = data ? data[1] : {};
+  const loadComments = data ? data[2] : {};
 
   return (
     <React.Fragment>

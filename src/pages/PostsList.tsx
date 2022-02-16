@@ -21,7 +21,9 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
   }, [message]);
 
   // Call query
-  const { data, status } = useQuery<any>(["data", null], () => fetchData(null));
+  const { data, status } = useQuery<(Post[] | User[] | Comment[])[] | undefined | any>(["data", null], () =>
+    fetchData(null, "2")
+  );
   let loadPosts: Post[] = data ? data[0] : [];
   let loadUsers: User[] = data ? data[1] : [];
   let loadComments: Comment[] = data ? data[2] : [];
