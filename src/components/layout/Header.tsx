@@ -14,6 +14,9 @@ const Header: React.FC<{ message: string }> = ({ message }) => {
         <NavLink to="/posts" className={styles.link}>
           All Posts
         </NavLink>
+        <NavLink to="/form" className={styles.link}>
+          Form
+        </NavLink>
       </nav>
     </header>
   );
