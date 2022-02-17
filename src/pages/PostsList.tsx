@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 import { Post, User, Comment } from "../interface/index";
 import logCompName from "../helper/logCompName";
 import fetchData from "../components/hooks/fetch-query";
@@ -11,6 +11,12 @@ import CardLayout from "../components/UI/CardLayout";
 import CommentBlock from "../components/post/CommentBlock";
 import { Link } from "react-router-dom";
 
+interface All {
+  0: Post[];
+  1: User[];
+  2: Comment[];
+}
+
 const PostsList: React.FC<{ message: string }> = ({ message }) => {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -21,9 +27,7 @@ const PostsList: React.FC<{ message: string }> = ({ message }) => {
   }, [message]);
 
   // Call query
-  const { data, status } = useQuery<(Post[] | User[] | Comment[])[] | undefined | any>(["data", null], () =>
-    fetchData(null, "2")
-  );
+  const { data, status }: UseQueryResult<All> = useQuery(["data", null], () => fetchData(null, "2"));
   let loadPosts: Post[] = data ? data[0] : [];
   let loadUsers: User[] = data ? data[1] : [];
   let loadComments: Comment[] = data ? data[2] : [];

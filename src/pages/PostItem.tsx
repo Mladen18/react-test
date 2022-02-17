@@ -7,9 +7,15 @@ import { useParams } from "react-router-dom";
 import logCompName from "../helper/logCompName";
 // import useFetch from "../components/hooks/use-fetch";
 import fetchData from "../components/hooks/fetch-query";
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 import style from "./PostItem.module.scss";
 import CommentBlock from "../components/post/CommentBlock";
+
+interface All {
+  0: Post;
+  1: User[];
+  2: Comment[];
+}
 
 const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props
@@ -26,17 +32,10 @@ const PostItem: React.FC<{ message: string }> = ({ message }) => {
   // Call custom hook
   // const { isLoading, loadPost, loadComments, loadUsers } = useFetch(+id);
 
-  // Call query
-  // const loadPost: Promise<Post | null> = useQuery(['post', id], () => fetchData(+id, "Post"))
-  // const loadUsers: User[] = useQuery('users', fetchTeams)
-  // const loadComments: Comment[] = useQuery('comments', fetchProjects)
-
-  const { data, status } = useQuery<(Post | User[] | Comment[])[] | undefined | any>(["post", id], () =>
-    fetchData(+id, "1")
-  );
-  const loadPost = data ? data[0] : {};
-  const loadUsers = data ? data[1] : {};
-  const loadComments = data ? data[2] : {};
+  const { data, status }: UseQueryResult<All> = useQuery(["post", id], () => fetchData(+id, "1"));
+  const loadPost: Post = data ? data[0] : { id: 0, title: "", body: "", userId: 0 };
+  const loadUsers: User[] = data ? data[1] : [];
+  const loadComments: Comment[] = data ? data[2] : [];
 
   return (
     <React.Fragment>

@@ -7,25 +7,16 @@ const fetchData = async (
 ): Promise<(Post | Post[] | User[] | Comment[])[] | undefined> => {
   switch (name) {
     case "1":
-      try {
-        const [postData, userData, commentData] = await Promise.all([
-          getPost(id ? +id : null),
-          getUsers(),
-          getComments(id ? +id : null),
-        ]);
-        return [postData, userData, commentData];
-      } catch (error) {
-        console.log(error);
-      }
-      break;
+      const [postData, userData, commentData] = await Promise.all([
+        getPost(id ? +id : null),
+        getUsers(),
+        getComments(id ? +id : null),
+      ]);
+      return [postData, userData, commentData];
     case "2":
-      try {
-        const [postsData, usersData, commentsData] = await Promise.all([getPosts(), getUsers(), getAllComments()]);
-        return [postsData, usersData, commentsData];
-      } catch (error) {
-        console.log(error);
-      }
-      break;
+      const [postsData, usersData, commentsData] = await Promise.all([getPosts(), getUsers(), getAllComments()]);
+      return [postsData, usersData, commentsData];
+
     default:
       console.log("Error");
   }
