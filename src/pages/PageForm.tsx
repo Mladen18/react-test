@@ -5,6 +5,7 @@ import { createPost } from "../services/api";
 import { FormValues, postErrors } from "../interface/index";
 import { useMutation } from "react-query";
 import FormStyle from "./PageForm.module.scss";
+import Button from "../components/UI/Button";
 
 const PageForm: React.FC<{ message: string }> = ({ message }) => {
   // Log Message props
@@ -69,9 +70,10 @@ const PageForm: React.FC<{ message: string }> = ({ message }) => {
               />
               <ErrorMessage name="body" component="div" className={FormStyle.error} />
             </div>
-            <button className={FormStyle.button} type="submit" disabled={isSubmitting}>
+            <Button name="Submit" btnType="submit" disabled={isSubmitting} />
+            {/* <button className={FormStyle.button} type="submit" disabled={isSubmitting}>
               Submit
-            </button>
+            </button> */}
           </Form>
         )}
       </Formik>
